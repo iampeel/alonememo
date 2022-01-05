@@ -68,15 +68,19 @@
             }
         }
 
-        function mise() {
+        function postArticle() {
+            let url = $('#post-url').val()
+            let comment = $('#post-comment').val()
+
             $.ajax({
-                type: "GET",
-                url: "여기에URL을입력",
-                data: {},
-                success: function (response) {
-                    console.log(response);
-                },
-            });
+                type: "POST",
+                url: "/memo",
+                data: { url_give: url, comment_give: comment },
+                success: function (response) { // 성공하면
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+            })
         }
 
     </script>
@@ -96,14 +100,14 @@
         </div>
         <div class="posting-box" id="post-box">
             <div class="form-group">
-                <label>아티클 URL</label>
-                <input type="email" class="form-control" id="article-url" aria-describedby="emailHelp" placeholder="">
+                <label for="post-url">아티클 URL</label>
+                <input id="post-url" class="form-control" placeholder="">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">간단 코멘트</label>
-                <input type="password" class="form-control" placeholder="">
+                <label for="post-comment">간단 코멘트</label>
+                <textarea id="post-comment" class="form-control" rows="2"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">기사 저장</button>
+            <button type="submit" class="btn btn-primary" onclick="postArticle()">기사 저장</button>
         </div>
         <div class="card-columns">
             <div class="card">
