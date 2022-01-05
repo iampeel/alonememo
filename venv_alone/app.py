@@ -8,8 +8,6 @@ app = Flask(__name__)
 client = MongoClient('localhost', 27017)
 db = client.dbsparta
 
-# HTML을 주는 부분
-
 
 @app.route('/')
 def home():
@@ -18,11 +16,9 @@ def home():
 
 @app.route('/memo', methods=['GET'])
 def listing():
-    sample_receive = request.args.get('sample_give')
-    print(sample_receive)
-    return jsonify({'msg': 'GET 연결되었습니다!'})
-
-# API 역할을 하는 부분
+    # DB에서 여러 개 꺼내기
+    articles = list(db.articles.find({}, {'_id': False}))
+    return jsonify({'all_articles': articles})
 
 
 @app.route('/memo', methods=['POST'])
